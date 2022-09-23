@@ -1,0 +1,18 @@
+import kotlin.math.sqrt
+import kotlin.math.pow
+class Solution {
+    fun solution(n: Long): Long {
+        var answer: Long = 0
+        var a=sqrt(n.toDouble()).toLong()
+        
+        if(a*a==n)
+        {
+            answer = (a+1)*(a+1)
+            return answer
+        }
+        else
+        {
+            return -1
+        }
+        
+    }
