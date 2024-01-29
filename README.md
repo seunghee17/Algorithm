@@ -1,3 +1,3 @@
-# Programmers-Algorithm
-프로그래머스 문제풀이
-하루에 3문제씩 꾸준히 풀기!👩🏻‍💻👩🏻‍💻
+# Algorithm
+적을 Algo 나를 Al면 그것이 Algorithm...
+꾸준히 풀기👩🏻‍💻👩🏻‍💻
