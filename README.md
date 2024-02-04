@@ -1,3 +1,2 @@
 # Algorithm
-적을 Algo 나를 Al면 그것이 Algorithm...
 꾸준히 풀기👩🏻‍💻👩🏻‍💻
