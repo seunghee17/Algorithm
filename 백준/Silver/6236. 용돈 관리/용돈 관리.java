@@ -1,58 +1,54 @@
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
+import java.math.*;
 
 public class Main {
-    static int N, M;
-    static int[] arr;
-    static int max = 0;
-    static int result;
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        N = sc.nextInt();
-        M = sc.nextInt();
-        arr = new int[N];
-
-        for (int i = 0; i < N; ++i) {
-            arr[i] = sc.nextInt();
-            max = Integer.max(max, arr[i]);
-        }
-        // 돈을 가장 많이 쓰는 날 이상의 금액을 인출해야 한다.
-        // 그렇지 않으면 인출을 하더라도 금액이 부족하기 때문에 계속 인출을 반복하게 된다.
-        int left = max;
-        int right = 10_000 * 100_000;
-        int count = 0;
-        // 이진 탐색을 이용하여 해답을 찾는다.
-        while (left <= right) {
-            int mid = (left + right) / 2;
-            // 지정한 횟수 이하의 횟수만큼 인출해야 할 경우,
-            // 인출 금액이 더 적은 경우에 해답이 있는지 탐색해 봐야 한다.
-            if (M >= getWithdrawalCount(mid)) {
-                result = mid;
-                right = mid - 1;
-                // 지정한 횟수보다 더 많이 인출해야 할 경우,
-                // 인출 금액이 더 커야한다.
-            } else {
-                left = mid + 1;
-            }
-        }
-        System.out.println(result);
-    }
-    /**
-     * @param withdrawalAmount 현금 인출 금액
-     * @return 돈을 계획대로 쓰기 위해 필요한 인출 횟수
-     */
-    static int getWithdrawalCount(int withdrawalAmount) {
-        int count = 1;
-        int money = withdrawalAmount;
-
-        for (int i : arr) {
-            money -= i;
-            // 돈이 모자라면 현금을 다시 인출하여 사용
-            if (money < 0) {
-                ++count;
-                money = withdrawalAmount - i;
-            }
-        }
-        return count;
-    }
+	static int[] arr;
+	static int result;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+		int n = Integer.parseInt(st.nextToken()); //n일동안사용할 금액이 주어진다 
+		int m = Integer.parseInt(st.nextToken()); //m번만 통장에서 돈을 뺀다 
+		int left = 0;
+		arr = new int[n];
+		for(int i=0; i<n; i++) {
+			arr[i] = Integer.parseInt(br.readLine());
+			if(left < arr[i]) left = arr[i];
+		}
+		int right = 100000 * 10000;
+		int count =0;
+		while(left<=right) {
+			//조건을 만족하더라도 가능한한 최솟값을 찾아야하기때문에 조건을 다음과 같이 정한 것이다
+			int mid = (right+left) /2;
+			if(m>=getWithdraw(mid)) {
+				//최솟값을 구하는 것이기에 이때 저장시킴 
+				//현재 인출금액이 크기때문에 줄여야한다 그러면 일수가 늘어난다 
+				result = mid;
+				right = mid-1;
+				
+			} else {
+				
+				//인출금액을 늘려야한다 
+				left = mid+1; 
+			}
+		}
+		System.out.println(result);
+		
+	}
+	static int getWithdraw(int withdraw) {
+		//첫날은 무조건 출금해야하기에 
+		int count =1;
+		int money = withdraw;
+		for(int i: arr) {
+			money -= i;
+			if(money<0) {
+				//남은 돈이 그날 하루를 생활하기에 부족함 
+				count++;
+				money = withdraw - i;
+			}
+		}
+		return count;
+	}
+	
 }
