@@ -1,41 +1,41 @@
+
 import java.io.*;
 import java.util.*;
 import java.math.*;
-
 public class Main {
-	static int N;
-	static int S;
 	static int[] arr;
-	static int cnt =0;
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-		N = Integer.parseInt(st.nextToken());
-		S = Integer.parseInt(st.nextToken());
-		
-		StringTokenizer sr = new StringTokenizer(br.readLine(), " ");
-		arr = new int[N];
-		for(int i=0; i<N; i++) {
-			arr[i] = Integer.parseInt(sr.nextToken());
-		}
-		dfs(0,0);
-		if(S==0) {
-            System.out.println(cnt-1);
-        } else {
-            System.out.println(cnt);
-        }
-		
-	}
+	static int s,n=0;
+	static int cnt=0;
 	
-	static void dfs(int depth, int sum) {
-		if(depth == N) {
-			if(sum == S) {
-				cnt++;
-			}
-			return;
-		}
-		dfs(depth+1, sum+ arr[depth]);
-		dfs(depth+1, sum);
-	}
-
+    public static void main(String[] args) throws IOException {
+    	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    	StringTokenizer st = new StringTokenizer(br.readLine());
+    	n = Integer.parseInt(st.nextToken());
+    	s = Integer.parseInt(st.nextToken());
+    	arr = new int[n];
+    	
+    	StringTokenizer sr = new StringTokenizer(br.readLine());
+    	for(int i=0; i<n; i++) {
+    		arr[i] = Integer.parseInt(sr.nextToken());
+    	}
+    	find(0,0);
+    	if(s==0) {
+    		System.out.println(cnt-1);
+    	} else {
+    		System.out.println(cnt);
+    	}
+    	
+    }
+    static void find(int depth, int sum) {
+    	if(depth==n) {
+    		if(sum==s) {
+        		cnt++;
+        	}
+    		return;
+    	}
+    	find(depth+1, sum+arr[depth]); //현재 원소를 포함하는 경
+    	find(depth+1, sum); //현재 원소를System.out.println(cnt-1); 포함하지 않는 경우 
+    	
+    }
+  
 }
