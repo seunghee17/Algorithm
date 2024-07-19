@@ -3,38 +3,24 @@ import java.io.*;
 import java.util.*;
 import java.math.*;
 
-
 public class Main {
-	static char[] first;
-	static char[] second;
-	static Integer[][] dp;
+	
     public static void main(String[] args) throws IOException {
     	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    	first = br.readLine().toCharArray();
-    	second = br.readLine().toCharArray();
-    	dp = new Integer[first.length][second.length];
-    	int result = LCS(first.length-1, second.length-1);
-    	System.out.println(result);
-    } 
-    static int LCS(int x, int y) {
-    	if(x == -1 || y== -1) {
-    		return 0;
+    	char[] first = br.readLine().toCharArray();
+    	char[] second = br.readLine().toCharArray();
+    	int[][] graph = new int[first.length + 1][second.length + 1];
+    	for(int i=1; i<= first.length; i++) {
+    		for(int j=1; j<=second.length; j++) {
+    			if(first[i-1] == second[j-1]) {
+    				graph[i][j] = graph[i-1][j-1] + 1;
+    			}else {
+    				graph[i][j] = Math.max(graph[i][j-1], graph[i-1][j]);
+    			}
+    		}
     	}
-    	if(dp[x][y] == null) {
-    		dp[x][y] = 0;
-    		
-    		//만약 마지막 문자가 서로 같다면 
-    		if(first[x] == second[y]) {
-        		dp[x][y] = LCS(x-1, y-1) + 1;
-        	}
-        	//같지 않다면 
-        	else {
-        		dp[x][y] = Math.max(LCS(x-1, y), LCS(x,y-1));
-        	}
-    	}
+    	System.out.println(graph[first.length][second.length]);
     	
-    	
-    	return dp[x][y];
     }
-    
 }
+    
