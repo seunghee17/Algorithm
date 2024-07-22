@@ -1,40 +1,42 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
+import java.math.*;
 
-public class Main{
+public class Main {
+	
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-
-
-        int n = Integer.parseInt(br.readLine());
-        int arr[][] = new int[n+1][n+1];
-        int input[] = new int[n+1];
-
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        for(int j=1;j<=n;j++){
-            int temp = Integer.parseInt(st.nextToken());
-            input[j]=temp;
-            for(int i=1;i<=j;i++){
-                if(i==j)arr[i][j]=1;
-                else if(j-i==1) arr[i][j] = (input[j]==input[i])?1 : 0;
-                else {
-                    arr[i][j] = (input[j]==input[i] && arr[i+1][j-1]==1)?1 : 0;
-                }
-            }
-        }
-
-        int TC = Integer.parseInt(br.readLine());
-        while(TC --> 0 ){
-            st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            sb.append(arr[a][b]).append("\n");
-        }
-
-        System.out.println(sb);
+    	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    	int n = Integer.parseInt(br.readLine());
+    	int[] arr = new int[n+1];
+    	int[][] dp = new int[n+1][n+1];
+    	StringTokenizer st = new StringTokenizer(br.readLine());
+    	
+    	for(int i=1; i<=n; i++) {
+    		arr[i] =  Integer.parseInt(st.nextToken());
+    		for(int j=1; j<=i; j++) {
+    			if(i==j) {
+    				dp[j][i] = 1;
+    			}
+    			else if(i-j == 1) {
+    				if(arr[i] == arr[j]) dp[j][i] = 1;
+    			}
+    			else {
+    				if(arr[j] == arr[i] && dp[j+1][i-1]==1) {
+    					dp[j][i] = 1;
+    				}
+    			}
+    		}
+    	}
+    	int m = Integer.parseInt(br.readLine());
+    	StringBuilder sb = new StringBuilder();
+    	while(m-->0) {
+    		st = new StringTokenizer(br.readLine());
+    		int s = Integer.parseInt(st.nextToken());
+    		int e = Integer.parseInt(st.nextToken());
+    		sb.append(dp[s][e]).append("\n");
+    	}
+    	System.out.println(sb.toString());
     }
+   
+    
 }
